@@ -1,0 +1,27 @@
+def tinystories_split(input_file, train_file, val_file, val_ratio=0.05):
+    with open(input_file, "r", encoding="utf-8") as f:
+        stories = [line.rstrip() for line in f if line.strip()]
+
+    total = len(stories)
+    val_size = int(total * val_ratio)
+
+    train = stories[:-val_size]
+    val = stories[-val_size:]
+
+    with open(train_file, "w", encoding="utf-8") as f:
+        f.write("\n\n".join(train))
+
+
+    with open(val_file, "w", encoding="utf-8") as f:
+        f.write("\n\n".join(val))
+
+    print("Total stories:", total)
+    print("Train stories:", len(train))
+    print("Val stories:", len(val))
+
+
+tinystories_split(
+"simple_stories.txt",
+    "train_simp.txt",
+    "val_simp.txt"
+)
