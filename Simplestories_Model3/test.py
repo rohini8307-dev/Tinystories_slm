@@ -4,26 +4,17 @@ import torch.nn as nn
 import torch.nn.functional as F
 import tiktoken
 
-# -------------------------------------------------
-# Device
-# -------------------------------------------------
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Using device:", device)
 
-# -------------------------------------------------
-# Config (MUST match training)
-# -------------------------------------------------
 class GPTConfig:
     vocab_size = 50257
     block_size = 256
     n_layer = 8
     n_head = 8
     n_embd = 336
-    dropout = 0.0  # IMPORTANT for inference
-
-# -------------------------------------------------
-# Model definition
-# -------------------------------------------------
+    dropout = 0.0  
+    
 class CausalSelfAttention(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -90,29 +81,21 @@ class GPT(nn.Module):
         x = self.ln_f(x)
         return self.lm_head(x)
 
-# -------------------------------------------------
-# Load model
-# -------------------------------------------------
 ckpt = torch.load("simple_stories_ckpt.pt", map_location=device)
 
 model = GPT(GPTConfig()).to(device)
 model.load_state_dict(ckpt["model"])
 model.eval()
 
-print("✅ Model loaded")
+print("Model loaded")
 
-# -------------------------------------------------
-# Tokenizer
-# -------------------------------------------------
 enc = tiktoken.get_encoding("gpt2")
 eot_token = enc.encode(
     "<|endoftext|>",
     allowed_special={"<|endoftext|>"}
 )[0]
 
-# -------------------------------------------------
-# Generation
-# -------------------------------------------------
+
 @torch.no_grad()
 def generate(
     prompt,
@@ -145,8 +128,4 @@ def generate(
 
     return enc.decode(idx[0].tolist())
 
-# -------------------------------------------------
-# Test
-# -------------------------------------------------
-print("\n--- SAMPLE OUTPUT ---\n")
 print(generate("Hi, rohini"))
