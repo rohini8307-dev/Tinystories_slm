@@ -1,4 +1,4 @@
-**TinyStories → Children Stories → Simple Stories**
+## **TinyStories → Children Stories → Simple Stories**
 
 - This project implements a minimal GPT-style language model trained fully from scratch, following a progressive training pipeline:
         TinyStories → Children Stories → Simple Stories
