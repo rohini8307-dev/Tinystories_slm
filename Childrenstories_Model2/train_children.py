@@ -179,7 +179,7 @@ for step in range(max_steps):
 
     if step % eval_interval == 0 and step > 0:
         val_loss = estimate_loss()
-        print(f"🔍 validation loss: {val_loss:.4f}")
+        print(f"Validation loss: {val_loss:.4f}")
 
         if val_loss < best_val_loss:
             best_val_loss = val_loss
