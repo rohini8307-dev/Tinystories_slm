@@ -117,10 +117,5 @@ def generate(
 
     return enc.decode(idx[0].tolist())
 
-
-# ----------------------------
-# TEST
-# ----------------------------
-print("\n--- SAMPLE OUTPUT ---\n")
 print(generate("Hi, how are you"))
 
